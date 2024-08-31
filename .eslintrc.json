@@ -1,3 +1,8 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "accessor-pairs": "error",
+    "indent": ["error", 2],
+    "object-curly-spacing": ["error", "always"]
+  }
 }

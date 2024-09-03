@@ -1,9 +1,4 @@
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
 import { Link } from "@nextui-org/link";
 import HeaderAuth from "@/components/header/header-auth";
 

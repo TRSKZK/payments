@@ -15,6 +15,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        'header-logo': 'hsl(270 66.67% 47.06% / 1)'
+      }
     },
   },
   darkMode: "class",

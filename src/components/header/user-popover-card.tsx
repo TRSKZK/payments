@@ -1,3 +1,4 @@
+"use client";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Link } from "@nextui-org/link";
 import { Badge } from "@nextui-org/badge";
@@ -6,8 +7,9 @@ import cart from "../../../public/cart1.svg";
 import user from "../../../public/user.svg";
 import payments from "../../../public/payments.svg";
 import { Button, Divider } from "@nextui-org/react";
+import { signOut } from "next-auth/react";
 
-export function UserPopoverCard({ action }: { action: () => Promise<void> }) {
+export function UserPopoverCard() {
   return (
     <Card className="p-2 w-full">
       <CardBody>
@@ -57,11 +59,13 @@ export function UserPopoverCard({ action }: { action: () => Promise<void> }) {
       </CardBody>
       <Divider />
       <CardFooter>
-        <form action={action}>
-          <Button color="secondary" type="submit">
-            Log Out
-          </Button>
-        </form>
+        <Button
+          onClick={() => signOut({ callbackUrl: "/" })}
+          color="secondary"
+          type="button"
+        >
+          Log Out
+        </Button>
       </CardFooter>
     </Card>
   );

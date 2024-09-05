@@ -1,22 +1,22 @@
 import { Button, NavbarItem } from "@nextui-org/react";
-import { handleRegisterClick, handleSignIn } from "@/app/actions/auth";
+import { Link } from "@nextui-org/link";
 
 export function UnAuthenticatedHeader() {
   return (
     <>
       <NavbarItem>
-        <form action={handleSignIn}>
-          <Button type="submit" color="secondary">
+        <Button type="submit" color="secondary">
+          <Link className="text-inherit" href="/signIn">
             Sign In
-          </Button>
-        </form>
+          </Link>
+        </Button>
       </NavbarItem>
       <NavbarItem>
-        <form action={handleRegisterClick}>
-          <Button type="submit" color="secondary">
+        <Button type="submit" color="secondary">
+          <Link className="text-inherit" href="/register">
             Register
-          </Button>
-        </form>
+          </Link>
+        </Button>
       </NavbarItem>
     </>
   );

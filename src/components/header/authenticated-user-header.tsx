@@ -5,8 +5,6 @@ import {
   PopoverTrigger,
 } from "@nextui-org/react";
 import { User } from "@nextui-org/user";
-import { handleSignOut } from "@/app/actions/auth";
-import { redirect } from "next/navigation";
 import { UserPopoverCard } from "@/components/header/user-popover-card";
 
 interface AuthenticatedUserHeaderProps {
@@ -20,10 +18,6 @@ export function AuthenticatedUserHeader({
   name,
   email,
 }: AuthenticatedUserHeaderProps) {
-  const signOut = async () => {
-    await handleSignOut();
-    redirect("/");
-  };
   return (
     <NavbarItem>
       <Popover>
@@ -37,7 +31,7 @@ export function AuthenticatedUserHeader({
           />
         </PopoverTrigger>
         <PopoverContent className="m-0 p-0 w-[200px]">
-          <UserPopoverCard action={signOut} />
+          <UserPopoverCard />
         </PopoverContent>
       </Popover>
     </NavbarItem>

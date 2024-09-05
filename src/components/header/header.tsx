@@ -1,8 +1,9 @@
+"use server";
 import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
 import { Link } from "@nextui-org/link";
 import HeaderAuth from "@/components/header/header-auth";
 
-export default function Header() {
+export default async function Header() {
   return (
     <Navbar className="bg-violet-300 sticky top-0 z-10">
       <NavbarBrand>

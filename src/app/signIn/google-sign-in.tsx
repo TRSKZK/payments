@@ -1,6 +1,7 @@
-import { Button, Image } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import google from "../../../public/Googlelogo.svg";
 import { handleSignInWithGoogle } from "@/app/actions/auth";
+import Image from "next/image";
 
 export function GoogleSignIn() {
   return (

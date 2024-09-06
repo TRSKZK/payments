@@ -1,5 +1,6 @@
 import { Button, Divider, Input } from "@nextui-org/react";
 import { GoogleSignIn } from "@/app/signIn/google-sign-in";
+import { Link } from "@nextui-org/link";
 
 export default async function SignIn() {
   return (
@@ -21,6 +22,9 @@ export default async function SignIn() {
         <Divider className="my-3" />
 
         <GoogleSignIn />
+        <div className="text-end mt-4">
+          <Link href="/register">Create Account</Link>
+        </div>
       </div>
     </div>
   );

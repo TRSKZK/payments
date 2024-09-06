@@ -1,10 +1,13 @@
 import Header from "@/components/header/header";
+import Container from "@/components/container";
 
 export default function Profile() {
   return (
     <div>
       <Header />
-      <div className="container mx-auto w-full">Profile</div>
+      <Container>
+        <div>Profile</div>
+      </Container>
     </div>
   );
 }

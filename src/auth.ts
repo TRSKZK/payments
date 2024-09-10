@@ -22,7 +22,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "email" },
         password: { label: "password" },
       },
-      async authorize(credentials, request) {
+      async authorize(credentials) {
+        const user = await db.user.findFirst({
+          where: { email: credentials.email || "" },
+        });
         return {} as User;
       },
     }),

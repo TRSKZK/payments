@@ -1,10 +1,10 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/db";
 import Google from "@auth/core/providers/google";
 import Credentials from "@auth/core/providers/credentials";
-import bcrypt from "bcrypt";
 import { decode, encode } from "next-auth/jwt";
+import axios, { AxiosResponse } from "axios";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -27,16 +27,20 @@ export const { handlers, signIn, auth } = NextAuth({
       async authorize(credentials) {
         const { email, password } = credentials;
 
-        const user = await db.user.findFirst({
-          where: { email: email as string },
-        });
+        const response: AxiosResponse<string | User | null> = await axios.post(
+          "http://localhost:3000/api/sign-in",
+          { email, password },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        );
 
-        if (typeof password === "string" && user) {
-          if (bcrypt.compareSync(password, user.password || "")) {
-            return user;
-          }
+        if (typeof response.data === "string") {
+          return null;
         }
-        return null;
+        return response.data;
       },
     }),
   ],

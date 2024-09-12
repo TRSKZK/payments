@@ -23,6 +23,7 @@ export function useSignIn() {
     defaultValues,
     resolver: zodResolver(loginValidationSchema),
   });
+
   const action: () => void = handleSubmit(async (data: SignInForm) => {
     await handleSignInWithCredentials(data.email, data.password);
   });

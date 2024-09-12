@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { Form, useForm } from "react-hook-form";
-import { validationSchema } from "@/app/register/validationSchema";
+import { registerValidationSchema } from "@/app/register/registerValidationSchema";
 import { useRouter } from "next/navigation";
 
 export interface FormValues {
@@ -12,7 +12,12 @@ export interface FormValues {
   password: string;
 }
 
-const defaultValues = { email: "", firstName: "", lastName: "", password: "" };
+const registerDefaultValues = {
+  email: "",
+  firstName: "",
+  lastName: "",
+  password: "",
+};
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -23,8 +28,8 @@ export default function RegisterPage() {
     register,
     reset,
   } = useForm<FormValues>({
-    resolver: zodResolver(validationSchema),
-    defaultValues,
+    resolver: zodResolver(registerValidationSchema),
+    defaultValues: registerDefaultValues,
   });
 
   const action: () => void = handleSubmit(async (data: FormValues) => {

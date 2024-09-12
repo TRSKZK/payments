@@ -3,18 +3,19 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/db";
 import Google from "@auth/core/providers/google";
 import Credentials from "@auth/core/providers/credentials";
-import { User } from "@prisma/client";
+import bcrypt from "bcrypt";
+import { decode, encode } from "next-auth/jwt";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, signIn, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  pages: {
-    signIn: "/signIn",
-  },
+  jwt: { encode, decode },
+  trustHost: true,
+
   providers: [
     Google({ clientSecret: GOOGLE_CLIENT_SECRET, clientId: GOOGLE_CLIENT_ID }),
     Credentials({
@@ -22,11 +23,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "email" },
         password: { label: "password" },
       },
+
       async authorize(credentials) {
+        const { email, password } = credentials;
+
         const user = await db.user.findFirst({
-          where: { email: credentials.email || "" },
+          where: { email: email as string },
         });
-        return {} as User;
+
+        if (typeof password === "string" && user) {
+          if (bcrypt.compareSync(password, user.password || "")) {
+            return user;
+          }
+        }
+        return null;
       },
     }),
   ],

@@ -1,7 +1,8 @@
+"use server";
 import Header from "@/components/header/header";
 import Container from "@/components/container";
 
-export default function Profile() {
+export default async function Profile() {
   return (
     <div>
       <Header />

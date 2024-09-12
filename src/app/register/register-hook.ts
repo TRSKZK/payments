@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerValidationSchema } from "@/app/register/registerValidationSchema";
+import { validationSchema } from "@/app/register/validation-schema";
 
 export interface RegisterFormValues {
   email: string;
@@ -26,7 +26,7 @@ export function useRegister() {
     register,
     reset,
   } = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerValidationSchema),
+    resolver: zodResolver(validationSchema),
     defaultValues: registerDefaultValues,
   });
 
@@ -38,7 +38,7 @@ export function useRegister() {
     });
 
     if (response.ok) {
-      router.push("/");
+      router.push("/signIn");
     }
     reset();
   });

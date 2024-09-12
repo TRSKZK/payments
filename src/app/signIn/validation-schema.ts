@@ -1,17 +1,7 @@
 import { z } from "zod";
 
-export const registerValidationSchema = z.object({
+export const loginValidationSchema = z.object({
   email: z.string().email({ message: "Must be a valid email address" }),
-  firstName: z
-    .string()
-    .min(3)
-    .max(20)
-    .regex(/^[A-Za-z]+$/, "Only alphabetical symbols are allowed "),
-  lastName: z
-    .string()
-    .min(3)
-    .max(20)
-    .regex(/^[A-Za-z]+$/, "Only alphabetical symbols are allowed "),
   password: z
     .string()
     .min(8)

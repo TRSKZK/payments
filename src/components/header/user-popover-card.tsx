@@ -3,7 +3,7 @@ import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Link } from "@nextui-org/link";
 import { Badge } from "@nextui-org/badge";
 import Image from "next/image";
-import cart from "../../../public/cart1.svg";
+import cart from "../../../public/cart.svg";
 import user from "../../../public/user.svg";
 import payments from "../../../public/payments.svg";
 import { Button, Divider } from "@nextui-org/react";

@@ -11,7 +11,7 @@ export default function RegisterPage() {
       <Form
         control={control}
         onSubmit={action}
-        className="flex min-w-[500px] flex-col gap-4"
+        className="flex min-w-[500px] flex-col gap-4 border-1 border-header-logo rounded-2xl p-10"
       >
         <Input
           {...register("email")}

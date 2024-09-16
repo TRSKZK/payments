@@ -8,6 +8,7 @@ import user from "../../../public/user.svg";
 import payments from "../../../public/payments.svg";
 import { Button, Divider } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
+import { Routes } from "@/common/routes";
 
 export function UserPopoverCard() {
   return (
@@ -15,7 +16,7 @@ export function UserPopoverCard() {
       <CardBody>
         <Link
           className="text-header-logo font-bold flex justify-between w-full"
-          href="/cart"
+          href={Routes.USER_CART}
         >
           <div>Cart</div>
           <div>
@@ -31,7 +32,7 @@ export function UserPopoverCard() {
         </Link>
         <Link
           className="text-header-logo font-bold flex justify-between w-full"
-          href="/profile"
+          href={Routes.USER_PROFILE}
         >
           <div>Profile</div>
           <div>
@@ -42,7 +43,7 @@ export function UserPopoverCard() {
         </Link>
         <Link
           className="text-header-logo font-bold flex justify-between w-full"
-          href="/payments"
+          href={Routes.USER_PAYMENTS}
         >
           <div>Payments</div>
           <div>

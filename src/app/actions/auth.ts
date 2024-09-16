@@ -1,9 +1,10 @@
 "use server";
 import { signIn } from "@/auth";
 import { redirect } from "next/navigation";
+import { Routes } from "@/common/routes";
 
 export const handleSignInWithGoogle = async () =>
-  signIn("google", { redirectTo: "/" });
+  signIn("google", { redirectTo: Routes.HOME });
 
 export const handleSignInWithCredentials = async (
   email: string,
@@ -16,7 +17,7 @@ export const handleSignInWithCredentials = async (
       password,
       redirect: false,
     });
-    path = "/";
+    path = Routes.HOME;
   } catch {
     path = null;
   } finally {

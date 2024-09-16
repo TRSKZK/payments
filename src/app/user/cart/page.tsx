@@ -1,10 +1,7 @@
-"use server";
-
 import { auth } from "@/auth";
-import Header from "@/components/header/header";
 import Container from "@/components/container";
 
-export default async function Payments() {
+export default async function Cart() {
   const session = await auth();
 
   if (!session?.user) {
@@ -12,11 +9,10 @@ export default async function Payments() {
   }
 
   return (
-    <>
-      <Header />
+    <div>
       <Container>
-        <div>Payments</div>
+        <div>Cart</div>
       </Container>
-    </>
+    </div>
   );
 }

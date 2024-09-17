@@ -1,61 +1,21 @@
 "use client";
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
 } from "@nextui-org/react";
-import { Form, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-interface NewAddressForm {
-  city: string;
-  street: string;
-  building: string;
-  apartment: string;
-}
-
-const defaultValues = {
-  city: "",
-  street: "",
-  building: "",
-  apartment: "",
-};
-
-const newAddressFormSchema = z.object({
-  city: z
-    .string()
-    .min(3)
-    .regex(/^[A-Za-z]+$/, "Alphabetical symbols only"),
-  street: z
-    .string()
-    .min(3)
-    .regex(/^[a-zA-Z ]*$/, "Alphabetical symbols only"),
-  building: z.string().min(1, "Should be at least one character long"),
-  apartment: z.string().min(1, "Should be at least one character long"),
-});
+import { Form } from "react-hook-form";
+import { useCreateNewAddress } from "@/components/add-new-address/new-address-form-hook";
 
 export default function AddNewAddress() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const {
-    control,
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm<NewAddressForm>({
-    defaultValues,
-    resolver: zodResolver(newAddressFormSchema),
-  });
 
-  const action: () => void = handleSubmit(async (data: NewAddressForm) => {
-    reset();
-  });
+  const { action, control, errors, register, reset } = useCreateNewAddress();
 
   return (
     <>
@@ -120,7 +80,14 @@ export default function AddNewAddress() {
                 </Form>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={() => {
+                    reset();
+                    onClose();
+                  }}
+                >
                   Close
                 </Button>
                 <Button

@@ -22,13 +22,15 @@ export default async function UserProfile({ params }: UserProfileProps) {
       </div>
       <div>Addresses</div>
       <div>
-        {user?.address.length && user?.address.length > 0
-          ? user.address.map((ad) => (
-              <>
-                {ad.street}/{ad.city}
-              </>
-            ))
-          : null}
+        {user?.address.length && user?.address.length > 0 ? (
+          user.address.map((ad) => (
+            <>
+              {ad.street}/{ad.city}
+            </>
+          ))
+        ) : (
+          <div>Oooops! You dont have any addresses yet</div>
+        )}
       </div>
     </Container>
   );

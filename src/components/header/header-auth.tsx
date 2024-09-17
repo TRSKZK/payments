@@ -7,9 +7,10 @@ import { Session } from "next-auth";
 
 interface HeaderAuthProps {
   session: Session | null;
+  id: string | null;
 }
 
-export default function HeaderAuth({ session }: HeaderAuthProps) {
+export default function HeaderAuth({ session, id }: HeaderAuthProps) {
   const { status } = useSession();
 
   if (status === "loading") {
@@ -20,6 +21,7 @@ export default function HeaderAuth({ session }: HeaderAuthProps) {
     <>
       {session?.user ? (
         <AuthenticatedUserHeader
+          id={id}
           email={session?.user?.email}
           name={session?.user.name}
           imageSrc={session?.user.image}

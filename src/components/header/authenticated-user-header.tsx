@@ -11,12 +11,14 @@ interface AuthenticatedUserHeaderProps {
   imageSrc?: string | null;
   name?: string | null;
   email?: string | null;
+  id?: string | null;
 }
 
 export function AuthenticatedUserHeader({
   imageSrc,
   name,
   email,
+  id,
 }: AuthenticatedUserHeaderProps) {
   return (
     <NavbarItem>
@@ -31,7 +33,7 @@ export function AuthenticatedUserHeader({
           />
         </PopoverTrigger>
         <PopoverContent className="m-0 p-0 w-[200px]">
-          <UserPopoverCard />
+          <UserPopoverCard id={id} />
         </PopoverContent>
       </Popover>
     </NavbarItem>

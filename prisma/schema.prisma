@@ -49,6 +49,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   password      String?
+  address       Address[]
+  payments      Payment[]
 
   @@map("users")
 }
@@ -60,4 +62,43 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+model Address {
+  id              String           @id @default(cuid())
+  city            String
+  street          String
+  building        String
+  appartment      String
+  utilityServices UtilityService[]
+
+  owner User @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("addresses")
+}
+
+model UtilityService {
+  id                    String @id @default(cuid())
+  name                  String
+  iban                  String
+  edrpou                String
+  personalAccountNumber String
+  prevValue             String
+  currentValue          String
+
+  address Address @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("utility-services")
+}
+
+model Payment {
+  id                    String   @id @default(cuid())
+  paymentDateTime       DateTime
+  iban                  String
+  edrpou                String
+  personalAccountNumber String
+  prevValue             String
+  currentValue          String
+
+  user User @relation(fields: [id], references: [id], onDelete: Cascade)
 }

@@ -10,7 +10,11 @@ import { Button, Divider } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
 import { Routes } from "@/common/routes";
 
-export function UserPopoverCard() {
+interface UserPopoverCardProps {
+  id?: string | null;
+}
+
+export function UserPopoverCard({ id }: UserPopoverCardProps) {
   return (
     <Card className="p-2 w-full">
       <CardBody>
@@ -32,7 +36,7 @@ export function UserPopoverCard() {
         </Link>
         <Link
           className="text-header-logo font-bold flex justify-between w-full"
-          href={Routes.USER_PROFILE}
+          href={`${Routes.USER_PROFILE}/${id}`}
         >
           <div>Profile</div>
           <div>

@@ -28,7 +28,7 @@ export default async function UserProfile({ params }: UserProfileProps) {
       </h1>
       <div>
         {addresses?.length ? (
-          <AddressTable addresses={addresses} />
+          <AddressTable slug={slug} addresses={addresses} />
         ) : (
           <div>Ooooops! You dont have any addresses yet</div>
         )}

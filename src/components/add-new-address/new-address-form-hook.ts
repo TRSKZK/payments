@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { newAddressFormSchema } from "@/components/add-new-address/validation-schema";
+import { addNewAddress } from "@/app/actions/add-new-address";
 
 export interface NewAddressForm {
   city: string;
@@ -9,13 +10,13 @@ export interface NewAddressForm {
   apartment: string;
 }
 
-export const defaultValues = {
+const defaultValues = {
   city: "",
   street: "",
   building: "",
   apartment: "",
 };
-export const useCreateNewAddress = () => {
+export const useCreateNewAddress = (slug: string) => {
   const {
     control,
     register,
@@ -28,6 +29,7 @@ export const useCreateNewAddress = () => {
   });
 
   const action: () => void = handleSubmit(async (data: NewAddressForm) => {
+    await addNewAddress(slug, data);
     reset();
   });
 

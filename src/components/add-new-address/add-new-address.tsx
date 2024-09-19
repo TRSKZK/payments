@@ -12,10 +12,15 @@ import {
 import { Form } from "react-hook-form";
 import { useCreateNewAddress } from "@/components/add-new-address/new-address-form-hook";
 
-export default function AddNewAddress() {
+interface AddNewAddressProps {
+  slug: string;
+}
+
+export default function AddNewAddress({ slug }: AddNewAddressProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const { action, control, errors, register, reset } = useCreateNewAddress();
+  const { action, control, errors, register, reset } =
+    useCreateNewAddress(slug);
 
   return (
     <>

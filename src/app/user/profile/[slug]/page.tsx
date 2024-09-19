@@ -1,7 +1,8 @@
 "use server";
 import Container from "@/components/container";
-import { db } from "@/db";
 import AddNewAddress from "@/components/add-new-address/add-new-address";
+import { AddressTable } from "@/components/address-table/address-table";
+import { getAddressesForUser } from "@/app/actions/get-addresses-for-user";
 
 interface UserProfileProps {
   params: {
@@ -11,25 +12,25 @@ interface UserProfileProps {
 
 export default async function UserProfile({ params }: UserProfileProps) {
   const { slug } = params;
-  const user = await db.user.findFirst({
-    where: { id: slug },
-    include: { address: true },
-  });
+
+  const addresses = await getAddressesForUser(slug);
+
   return (
     <Container>
-      <div className="my-8">
-        <AddNewAddress />
-      </div>
-      <div>Addresses</div>
+      {addresses && (
+        <div className="my-8">
+          <AddNewAddress slug={slug} />
+        </div>
+      )}
+
+      <h1 className="text-3xl text-header-logo font-bold mb-8">
+        Your Addresses
+      </h1>
       <div>
-        {user?.address.length && user?.address.length > 0 ? (
-          user.address.map((ad) => (
-            <>
-              {ad.street}/{ad.city}
-            </>
-          ))
+        {addresses?.length ? (
+          <AddressTable addresses={addresses} />
         ) : (
-          <div>Oooops! You dont have any addresses yet</div>
+          <div>Ooooops! You dont have any addresses yet</div>
         )}
       </div>
     </Container>

@@ -4,7 +4,7 @@ export const newAddressFormSchema = z.object({
   city: z
     .string()
     .min(3)
-    .regex(/^[A-Za-z]+$/, "Alphabetical symbols only"),
+    .regex(/^[A-Za-z ]+$/, "Alphabetical symbols only"),
   street: z
     .string()
     .min(3)

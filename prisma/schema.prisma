@@ -79,27 +79,35 @@ model Address {
 }
 
 model UtilityService {
-  id                    String @id @default(cuid())
+  id                    String    @id @default(cuid())
   name                  String
   iban                  String
   edrpou                String
   personalAccountNumber String
   prevValue             String
   currentValue          String
+  rate                  String
+  addressId             String
+  payment               Payment[]
 
-  address Address @relation(fields: [id], references: [id], onDelete: Cascade)
+  address Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
 
   @@map("utility-services")
 }
 
 model Payment {
   id                    String   @id @default(cuid())
-  paymentDateTime       DateTime
+  paymentDateTime       DateTime @default(now())
   iban                  String
   edrpou                String
   personalAccountNumber String
   prevValue             String
   currentValue          String
+  ownerId               String
+  serviceId             String
 
-  user User @relation(fields: [id], references: [id], onDelete: Cascade)
+  user    User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  service UtilityService @relation(fields: [serviceId], references: [id])
+
+  @@map("payments")
 }

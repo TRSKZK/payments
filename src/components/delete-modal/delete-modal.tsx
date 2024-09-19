@@ -8,6 +8,7 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import { deleteAddress } from "@/app/actions/delete-address";
+import { customMotion } from "@/common/custom-motion";
 
 interface DeleteModalProps {
   isOpen: boolean;
@@ -25,10 +26,12 @@ export function DeleteModal({
   const action = deleteAddress.bind(null, { addressId, slug });
   return (
     <Modal
+      backdrop="blur"
       aria-hidden={false}
       aria-modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
+      motionProps={customMotion}
     >
       <ModalContent>
         {(onClose) => (

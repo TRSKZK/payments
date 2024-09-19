@@ -55,8 +55,7 @@ export function AddressTable({ addresses, slug }: AddressTableProps) {
           {(address) => (
             <TableRow key={address.id}>
               {(columnKey) => (
-                // @ts-expect-error/comes from columnKey type
-                <TableCell>{renderCell(address, columnKey)}</TableCell>
+                <TableCell>{renderCell(address, columnKey as never)}</TableCell>
               )}
             </TableRow>
           )}

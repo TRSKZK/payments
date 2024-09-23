@@ -38,9 +38,7 @@ export function useRenderCell(
             <div className="relative flex items-center justify-center gap-2">
               <Tooltip content="Details">
                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                  <Link
-                    href={`/user/profile/${address.ownerId}/address/${address.id}`}
-                  >
+                  <Link href={`/user/profile/${address.ownerId}/${address.id}`}>
                     <EyeIcon />
                   </Link>
                 </span>

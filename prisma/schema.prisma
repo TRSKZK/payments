@@ -84,9 +84,9 @@ model UtilityService {
   iban                  String
   edrpou                String
   personalAccountNumber String
-  prevValue             String
-  currentValue          String
-  rate                  String
+  prevValue             String?
+  currentValue          String?
+  rate                  String?
   addressId             String
   payment               Payment[]
 

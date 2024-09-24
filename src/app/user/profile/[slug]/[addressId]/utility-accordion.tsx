@@ -1,64 +1,28 @@
 "use client";
 import { Accordion, AccordionItem, Button, Input } from "@nextui-org/react";
 import { UtilityService } from "@prisma/client";
-import { Form, useForm } from "react-hook-form";
+import { Form } from "react-hook-form";
+import { useState } from "react";
+import { usePaymentForm } from "@/app/user/profile/[slug]/[addressId]/payment-form";
 
 interface UtilityAccordionProps {
   utilities: UtilityService[];
+  userId: string;
 }
 
-const defaultValues = {
-  prevValue: "",
-  currentValue: "",
-  difference: "",
-  rate: "",
-  sumToPay: "",
-};
+export function UtilityAccordion({ utilities, userId }: UtilityAccordionProps) {
+  const [utilityId, setUtilityId] = useState<string>("");
 
-interface UtilityPayForm {
-  prevValue: string;
-  currentValue: string;
-  difference: string;
-  rate: string;
-  sumToPay: string;
-}
-
-export function UtilityAccordion({ utilities }: UtilityAccordionProps) {
   const renderUtilities = () => {
     return utilities.map((utility, index) => {
-      const { control, register, handleSubmit, setValue, getValues, watch } =
-        useForm<UtilityPayForm>({
-          defaultValues: {
-            ...defaultValues,
-            prevValue: utility.prevValue || "",
-            rate: utility.rate || "",
-          },
-        });
-
-      const action: () => void = handleSubmit(
-        async (formData: UtilityPayForm) => {
-          console.log(formData);
-        },
-      );
-      const getDifference = (prevValueFormDb: string | null) => {
-        const prevValue = prevValueFormDb
-          ? prevValueFormDb
-          : watch("prevValue");
-        const difference = (
-          Number(watch("currentValue")) - Number(prevValue)
-        ).toString();
-        setValue("difference", difference);
-        return difference;
-      };
-
-      const getSumToPay = (rateFromDb: string | null) => {
-        const rate = rateFromDb ? rateFromDb : watch("rate");
-        const sumToPay = (
-          Number(rate) * Number(getValues("difference"))
-        ).toString();
-        setValue("sumToPay", sumToPay);
-        return sumToPay;
-      };
+      const {
+        getDifference,
+        getSumToPay,
+        control,
+        register,
+        action,
+        isSubmitting,
+      } = usePaymentForm(utilityId, userId, utility);
 
       return (
         <AccordionItem
@@ -66,6 +30,7 @@ export function UtilityAccordion({ utilities }: UtilityAccordionProps) {
           aria-label={`Accordion ${index}`}
           title={utility.name}
           key={utility.id}
+          onPress={() => setUtilityId(utility.id)}
         >
           <div className="flex gap-8">
             <div>
@@ -117,7 +82,7 @@ export function UtilityAccordion({ utilities }: UtilityAccordionProps) {
                 contentEditable="false"
                 size="sm"
                 label="Difference"
-                value={getDifference(utility.prevValue)}
+                value={getDifference()}
                 {...register("difference")}
                 name="difference"
                 classNames={{
@@ -140,7 +105,7 @@ export function UtilityAccordion({ utilities }: UtilityAccordionProps) {
                 contentEditable={false}
                 size="sm"
                 label="Sum to pay"
-                value={getSumToPay(utility.rate)}
+                value={getSumToPay()}
                 {...register("sumToPay")}
                 name="sumToPay"
                 classNames={{
@@ -149,6 +114,7 @@ export function UtilityAccordion({ utilities }: UtilityAccordionProps) {
               />
               <Button
                 onPress={action}
+                isLoading={isSubmitting}
                 type="submit"
                 className="font-bold"
                 color="secondary"

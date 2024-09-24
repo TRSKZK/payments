@@ -28,7 +28,7 @@ export default async function AddressDetails({ params }: AddressDetailsProps) {
         </div>
       </div>
       <div className="mt-8">
-        <UtilityAccordion utilities={utilities} />
+        <UtilityAccordion userId={params.slug} utilities={utilities} />
       </div>
     </Container>
   );

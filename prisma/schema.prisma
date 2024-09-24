@@ -105,6 +105,7 @@ model Payment {
   currentValue          String
   ownerId               String
   serviceId             String
+  payed                 Int
 
   user    User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   service UtilityService @relation(fields: [serviceId], references: [id])

@@ -11,25 +11,53 @@ const defaultValues = {
   prevValue: "",
   currentValue: "",
   difference: "",
+  rate: "",
+  sumToPay: "",
 };
 
 interface UtilityPayForm {
   prevValue: string;
   currentValue: string;
   difference: string;
+  rate: string;
+  sumToPay: string;
 }
 
 export function UtilityAccordion({ utilities }: UtilityAccordionProps) {
   const renderUtilities = () => {
     return utilities.map((utility, index) => {
-      const { control, register, watch } = useForm<UtilityPayForm>({
-        defaultValues,
-      });
+      const { control, register, handleSubmit, setValue, getValues, watch } =
+        useForm<UtilityPayForm>({
+          defaultValues: {
+            ...defaultValues,
+            prevValue: utility.prevValue || "",
+            rate: utility.rate || "",
+          },
+        });
 
-      const findDifference = () => {
-        return (
-          Number(watch("currentValue")) - Number(watch("prevValue"))
+      const action: () => void = handleSubmit(
+        async (formData: UtilityPayForm) => {
+          console.log(formData);
+        },
+      );
+      const getDifference = (prevValueFormDb: string | null) => {
+        const prevValue = prevValueFormDb
+          ? prevValueFormDb
+          : watch("prevValue");
+        const difference = (
+          Number(watch("currentValue")) - Number(prevValue)
         ).toString();
+        setValue("difference", difference);
+        return difference;
+      };
+
+      const getSumToPay = (rateFromDb: string | null) => {
+        const rate = rateFromDb ? rateFromDb : watch("rate");
+        const sumToPay = (
+          Number(rate) * Number(getValues("difference"))
+        ).toString();
+        setValue("sumToPay", sumToPay);
+        return sumToPay;
       };
 
       return (
@@ -86,18 +114,50 @@ export function UtilityAccordion({ utilities }: UtilityAccordionProps) {
               </div>
               <Input
                 disabled
-                value={findDifference()}
                 contentEditable="false"
                 size="sm"
                 label="Difference"
+                value={getDifference(utility.prevValue)}
                 {...register("difference")}
                 name="difference"
                 classNames={{
                   input: ["!text-header-logo font-bold"],
                 }}
               />
-              <Button color="secondary">Pay</Button>
-              <Button color="primary">Add to Cart</Button>
+            </div>
+            <div className="flex gap-4 items-center mt-4">
+              <Input
+                size="sm"
+                label="Rate"
+                {...register("rate")}
+                name="rate"
+                classNames={{
+                  input: ["!text-header-logo font-bold"],
+                }}
+              />
+              <Input
+                disabled
+                contentEditable={false}
+                size="sm"
+                label="Sum to pay"
+                value={getSumToPay(utility.rate)}
+                {...register("sumToPay")}
+                name="sumToPay"
+                classNames={{
+                  input: ["!text-header-logo font-bold"],
+                }}
+              />
+              <Button
+                onPress={action}
+                type="submit"
+                className="font-bold"
+                color="secondary"
+              >
+                Pay
+              </Button>
+              <Button className="font-bold" color="primary">
+                Cart
+              </Button>
             </div>
           </Form>
         </AccordionItem>

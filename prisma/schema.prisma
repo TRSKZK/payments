@@ -99,6 +99,8 @@ model Payment {
   id                    String   @id @default(cuid())
   paymentDateTime       DateTime @default(now())
   iban                  String
+  serviceName           String
+  address               String
   edrpou                String
   personalAccountNumber String
   prevValue             String

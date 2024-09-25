@@ -1,7 +1,7 @@
 import { useDisclosure } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { validationSchema } from "@/app/user/profile/[slug]/[addressId]/validation-schema";
+import { validationSchema } from "@/components/add-utility-form/validation-schema";
 import { createUtilityService } from "@/app/actions/create-utility-service";
 
 const defaultValues = {

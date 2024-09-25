@@ -1,6 +1,6 @@
 "use server";
 
-import { AddNewUtilityServiceForm } from "@/app/user/profile/[slug]/[addressId]/use-create-new-utility";
+import { AddNewUtilityServiceForm } from "@/components/add-utility-form/use-create-new-utility";
 import { db } from "@/db";
 import { revalidatePath } from "next/cache";
 

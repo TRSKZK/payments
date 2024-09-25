@@ -1,16 +1,21 @@
 "use client";
 import { Accordion, AccordionItem, Button, Input } from "@nextui-org/react";
-import { UtilityService } from "@prisma/client";
+import { Address, UtilityService } from "@prisma/client";
 import { Form } from "react-hook-form";
 import { useState } from "react";
-import { usePaymentForm } from "@/app/user/profile/[slug]/[addressId]/payment-form";
+import { usePaymentForm } from "@/components/payment-form/use-payment-form";
 
 interface UtilityAccordionProps {
   utilities: UtilityService[];
   userId: string;
+  address: Address | null;
 }
 
-export function UtilityAccordion({ utilities, userId }: UtilityAccordionProps) {
+export function PaymentForm({
+  utilities,
+  userId,
+  address,
+}: UtilityAccordionProps) {
   const [utilityId, setUtilityId] = useState<string>("");
 
   const renderUtilities = () => {
@@ -22,7 +27,8 @@ export function UtilityAccordion({ utilities, userId }: UtilityAccordionProps) {
         register,
         action,
         isSubmitting,
-      } = usePaymentForm(utilityId, userId, utility);
+        errors,
+      } = usePaymentForm(utilityId, userId, utility, address);
 
       return (
         <AccordionItem
@@ -58,6 +64,8 @@ export function UtilityAccordion({ utilities, userId }: UtilityAccordionProps) {
                 {...register("currentValue")}
                 label="Current value"
                 name="currentValue"
+                isInvalid={!!errors.currentValue}
+                errorMessage={errors.currentValue?.message}
                 classNames={{
                   input: ["!text-header-logo font-bold"],
                 }}
@@ -70,6 +78,8 @@ export function UtilityAccordion({ utilities, userId }: UtilityAccordionProps) {
                 {...register("prevValue")}
                 label="Previous value"
                 name="prevValue"
+                isInvalid={!!errors.prevValue}
+                errorMessage={errors.prevValue?.message}
                 classNames={{
                   input: ["!text-header-logo font-bold"],
                 }}
@@ -85,6 +95,8 @@ export function UtilityAccordion({ utilities, userId }: UtilityAccordionProps) {
                 value={getDifference()}
                 {...register("difference")}
                 name="difference"
+                isInvalid={!!errors.difference}
+                errorMessage={errors.difference?.message}
                 classNames={{
                   input: ["!text-header-logo font-bold"],
                 }}

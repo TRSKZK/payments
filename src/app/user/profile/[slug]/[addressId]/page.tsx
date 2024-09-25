@@ -1,8 +1,8 @@
 import Container from "@/components/container";
 import { db } from "@/db";
-import { AddUtilityForm } from "@/app/user/profile/[slug]/[addressId]/add-utility-form";
+import { AddUtilityForm } from "@/components/add-utility-form/add-utility-form";
 import { getUtilityServices } from "@/app/actions/get-utility-services";
-import { UtilityAccordion } from "@/app/user/profile/[slug]/[addressId]/utility-accordion";
+import { PaymentForm } from "@/components/payment-form/payment-form";
 
 interface AddressDetailsProps {
   params: {
@@ -28,7 +28,11 @@ export default async function AddressDetails({ params }: AddressDetailsProps) {
         </div>
       </div>
       <div className="mt-8">
-        <UtilityAccordion userId={params.slug} utilities={utilities} />
+        <PaymentForm
+          address={address}
+          userId={params.slug}
+          utilities={utilities}
+        />
       </div>
     </Container>
   );

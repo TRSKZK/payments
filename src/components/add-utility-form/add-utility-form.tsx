@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import { Form } from "react-hook-form";
 import { customMotion } from "@/common/custom-motion";
-import { useCreateNewUtility } from "@/app/user/profile/[slug]/[addressId]/use-create-new-utility";
+import { useCreateNewUtility } from "@/components/add-utility-form/use-create-new-utility";
 
 interface AddUtilityFormProps {
   addressId: string;

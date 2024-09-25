@@ -1,6 +1,8 @@
-import { UtilityService } from "@prisma/client";
+import { Address, UtilityService } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { handlePayment } from "@/app/actions/handle-payment";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { validationSchema } from "@/components/payment-form/validation-schema";
 
 const defaultValues = {
   prevValue: "",
@@ -22,6 +24,7 @@ export function usePaymentForm(
   utilityId: string,
   userId: string,
   utility: UtilityService,
+  address: Address | null,
 ) {
   const {
     control,
@@ -30,17 +33,18 @@ export function usePaymentForm(
     setValue,
     getValues,
     watch,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<UtilityPayForm>({
     defaultValues: {
       ...defaultValues,
       prevValue: utility.prevValue || "",
       rate: utility.rate || "",
     },
+    resolver: zodResolver(validationSchema),
   });
 
   const action: () => void = handleSubmit(async (formData: UtilityPayForm) => {
-    await handlePayment(formData, utilityId, userId);
+    await handlePayment(formData, utilityId, userId, address);
   });
 
   const actualPrevValue = watch("prevValue");
@@ -69,5 +73,6 @@ export function usePaymentForm(
     register,
     action,
     isSubmitting,
+    errors,
   };
 }

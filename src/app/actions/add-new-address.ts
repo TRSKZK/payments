@@ -7,6 +7,9 @@ import { Routes } from "@/common/routes";
 import { baseUrl } from "@/common/constants";
 
 export async function addNewAddress(slug: string, data: NewAddressForm) {
+  if (!baseUrl) {
+    return null;
+  }
   await axios.post(
     `${baseUrl}/api/add-new-address`,
     { ...data, slug },

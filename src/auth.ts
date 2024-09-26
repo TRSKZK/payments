@@ -5,6 +5,7 @@ import Google from "@auth/core/providers/google";
 import Credentials from "@auth/core/providers/credentials";
 import { decode, encode } from "next-auth/jwt";
 import axios, { AxiosResponse } from "axios";
+import { baseUrl } from "@/common/constants";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -28,7 +29,7 @@ export const { handlers, signIn, auth } = NextAuth({
         const { email, password } = credentials;
 
         const response: AxiosResponse<string | User | null> = await axios.post(
-          "http://localhost:3000/api/sign-in",
+          `${baseUrl}/api/sign-in`,
           { email, password },
           {
             headers: {

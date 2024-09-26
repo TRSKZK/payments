@@ -20,14 +20,13 @@ export async function createUtilityService(
         addressId,
       },
     });
+    if (newUtility) {
+      revalidatePath(`/user/profile/${slug}/${addressId}`);
+      return { newUtility, status: 200 };
+    }
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message, status: 500 };
     }
   }
-  if (newUtility) {
-    revalidatePath(`/user/profile/${slug}/${addressId}`);
-    return { newUtility, status: 200 };
-  }
-  return { error: "Something went wrong", status: 401 };
 }

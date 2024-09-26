@@ -9,9 +9,8 @@ export async function createUtilityService(
   addressId: string,
   slug: string,
 ) {
-  let newUtility;
   try {
-    newUtility = await db.utilityService.create({
+    await db.utilityService.create({
       data: {
         iban: formData.iban,
         edrpou: formData.edrpou,
@@ -20,10 +19,7 @@ export async function createUtilityService(
         addressId,
       },
     });
-    if (newUtility) {
-      revalidatePath(`/user/profile/${slug}/${addressId}`);
-      return { newUtility, status: 200 };
-    }
+    revalidatePath(`/user/profile/${slug}/${addressId}`);
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message, status: 500 };

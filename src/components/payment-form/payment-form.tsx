@@ -2,7 +2,7 @@
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { Address, UtilityService } from "@prisma/client";
 import { UtilityAccordion } from "@/components/payment-form/utility-accordion";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 interface UtilityAccordionProps {
   utilities: UtilityService[];
@@ -15,8 +15,6 @@ export function PaymentForm({
   userId,
   address,
 }: UtilityAccordionProps) {
-  const [utilityId, setUtilityId] = useState<string>("");
-
   const renderUtilities = useMemo(() => {
     return utilities.map((utility, index) => (
       <AccordionItem
@@ -24,14 +22,12 @@ export function PaymentForm({
         className="mb-3"
         aria-label={`Accordion ${index}`}
         title={utility.name}
-        onPress={() => setUtilityId(utility.id)}
       >
         <UtilityAccordion
           key={utility.id}
           address={address}
           userId={userId}
           utility={utility}
-          utilityId={utilityId}
         />
       </AccordionItem>
     ));

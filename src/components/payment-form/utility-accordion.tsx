@@ -8,14 +8,12 @@ interface MyAccordionProps {
   address: Address | null;
   userId: string;
   utility: UtilityService;
-  utilityId: string;
 }
 
 export function UtilityAccordion({
   address,
   userId,
   utility,
-  utilityId,
 }: MyAccordionProps) {
   const {
     getDifference,
@@ -25,7 +23,7 @@ export function UtilityAccordion({
     action,
     isSubmitting,
     errors,
-  } = usePaymentForm(utilityId, userId, utility, address);
+  } = usePaymentForm(userId, utility, address);
 
   return (
     <>

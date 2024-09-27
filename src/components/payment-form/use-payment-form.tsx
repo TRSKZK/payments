@@ -21,7 +21,6 @@ export interface UtilityPayForm {
 }
 
 export function usePaymentForm(
-  utilityId: string,
   userId: string,
   utility: UtilityService,
   address: Address | null,
@@ -44,7 +43,7 @@ export function usePaymentForm(
   });
 
   const action: () => void = handleSubmit(async (formData: UtilityPayForm) => {
-    await handlePayment(formData, utilityId, userId, address);
+    await handlePayment(formData, utility.id, userId, address);
   });
 
   const actualPrevValue = watch("prevValue");

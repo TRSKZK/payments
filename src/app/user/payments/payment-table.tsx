@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  getKeyValue,
   Pagination,
   SortDescriptor,
   Spinner,
@@ -16,6 +15,7 @@ import useSWR from "swr";
 import { useMemo, useState } from "react";
 import { ResponseWithCount } from "@/app/api/get-payments/[...page]/route";
 import { Payment } from "@prisma/client";
+import { useRenderCell } from "@/app/user/payments/render-cells";
 
 interface PaymentTableProps {
   userId: string | null;
@@ -29,6 +29,8 @@ export function PaymentTable({ userId }: PaymentTableProps) {
     column: "paymentDateTime",
     direction: "ascending",
   });
+
+  const renderCell = useRenderCell();
 
   const { data, isLoading } = useSWR<ResponseWithCount>(
     `/api/get-payments/${page}/${userId}}`,
@@ -101,6 +103,9 @@ export function PaymentTable({ userId }: PaymentTableProps) {
         >
           Personal Account Number
         </TableColumn>
+        <TableColumn className="text-header-logo font-bold" key="actions">
+          actions
+        </TableColumn>
       </TableHeader>
       <TableBody
         items={sortedItems ?? []}
@@ -110,7 +115,7 @@ export function PaymentTable({ userId }: PaymentTableProps) {
         {(item) => (
           <TableRow key={item?.id}>
             {(columnKey) => (
-              <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+              <TableCell>{renderCell(item, columnKey as never)}</TableCell>
             )}
           </TableRow>
         )}

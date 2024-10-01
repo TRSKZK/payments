@@ -16,8 +16,9 @@ export default async function Payments() {
   return (
     <>
       <Container>
-        <div>Payments</div>
-        <PaymentTable userId={userId} />
+        <div className="mt-16">
+          <PaymentTable userId={userId} />
+        </div>
       </Container>
     </>
   );

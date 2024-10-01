@@ -43,7 +43,7 @@ export function UtilityAccordion({
           </span>
         </div>
       </div>
-      <Form className="my-8" control={control}>
+      <Form className="my-8" control={control} onSubmit={action}>
         <div className="flex flex-row gap-4 items-center">
           <Input
             className="text-header-logo"
@@ -112,7 +112,6 @@ export function UtilityAccordion({
             }}
           />
           <Button
-            onPress={action}
             isLoading={isSubmitting}
             type="submit"
             className="font-bold"

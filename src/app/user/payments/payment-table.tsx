@@ -16,6 +16,7 @@ import { useMemo, useState } from "react";
 import { ResponseWithCount } from "@/app/api/get-payments/[...page]/route";
 import { Payment } from "@prisma/client";
 import { useRenderCell } from "@/app/user/payments/render-cells";
+import { ROWS_PER_PAGE } from "@/common/constants";
 
 interface PaymentTableProps {
   userId: string | null;
@@ -33,18 +34,16 @@ export function PaymentTable({ userId }: PaymentTableProps) {
   const renderCell = useRenderCell();
 
   const { data, isLoading } = useSWR<ResponseWithCount>(
-    `/api/get-payments/${page}/${userId}}`,
+    `/api/get-payments/${page}/${userId}`,
     fetcher,
     {
       keepPreviousData: true,
     },
   );
 
-  const rowsPerPage = 10;
-
   const pages = useMemo(() => {
-    return data?.count ? Math.ceil(data.count / rowsPerPage) : 0;
-  }, [data?.count, rowsPerPage]);
+    return data?.count ? Math.ceil(data.count / ROWS_PER_PAGE) : 0;
+  }, [data?.count, ROWS_PER_PAGE]);
 
   const loadingState =
     isLoading || data?.results.length === 0 ? "loading" : "idle";
